@@ -2,7 +2,12 @@
 # Intel stack bootstrap: gateway + TrendRadar timer + ai-daily timers
 set -euo pipefail
 
-PAYLOAD_DIR="$(cd "$(dirname "$0")" && pwd)"
+BASE="https://gh-proxy.com/https://raw.githubusercontent.com/ynyyzyrf/test/intel-deploy"
+TMP="$(mktemp -d)"
+mkdir -p "$TMP/gateway" "$TMP/aidaily"
+curl -sL -m 60 "$BASE/gateway/gateway.py" -o "$TMP/gateway/gateway.py"
+curl -sL -m 60 "$BASE/aidaily/config.json" -o "$TMP/aidaily/config.json"
+PAYLOAD_DIR="$TMP"
 
 # --- gateway ---
 mkdir -p /opt/intel/gateway
